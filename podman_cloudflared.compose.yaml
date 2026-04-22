@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  cloudflared:
+    image: docker.io/cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    # Podman often requires full image paths (including the registry)
+    command: tunnel --no-autoupdate run --token "your token"
+    security_opt:
+      - label=disable # Disables SELinux separation if you run into permission issues
+    logging:
+      driver: journald # Recommended for Podman/systemd integration
